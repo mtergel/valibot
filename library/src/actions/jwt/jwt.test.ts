@@ -71,7 +71,8 @@ describe('jwt', () => {
         'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1MDAwMDB9.dBjftJeZ4CVP_mB92K27uhbUJW1p1r_wW1gFWFOEjXk',
         'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6dHJ1ZX0.OX6Ys9b0N_0dQPGPv_7nAYtwo7i_S3lBCJoZ4CZz2uk',
         'eyJhbGciOiJIUzI1NiIsImtpZCI6IjEifQ.eyJzdWIiOiIxMjMiLCJpc3MiOiJleGFtcGxlLmNvbSJ9.xmx1rd_lFfq7uO_vAnCkBZW4h_Mdw-CJNh0-j8l1DEk',
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.c2lnbmF0dXJl==',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.c2lnbmF0dXJl',
+        'eyJhbGciOiJub25lIn0.eyJzdWIiOiIxMjMifQ.',
       ]);
     });
   });
@@ -101,6 +102,15 @@ describe('jwt', () => {
       expectActionIssue(action, baseIssue, [
         'header.payload.signature.extra',
         'a.b.c.d',
+      ]);
+    });
+
+    test('for invalid base64url segments', () => {
+      expectActionIssue(action, baseIssue, [
+        'a.a.a',
+        'a=.a.a',
+        'abc==.def.ghi',
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.c2lnbmF0dXJl==',
       ]);
     });
 

@@ -28,9 +28,9 @@ const Action = v.jwt<TInput, TMessage>(message);
 
 ### Explanation
 
-With `jwt` you can validate that a string matches the three-part structure of a Base64URL-encoded JSON Web Token. If the input is not a JWT, you can use `message` to customize the error message.
+With `jwt` you can validate that a string matches the three-part compact serialization of a JSON Web Token with unpadded Base64URL segments. If the input is not a JWT, you can use `message` to customize the error message.
 
-> This validation action only checks the structural format of a JWT. It does not decode the token, verify the signature, or validate individual claims.
+> This validation action only checks the structural format of a JWT. It does not decode the token, verify the signature, or validate individual claims. Unsecured JWTs using `alg: "none"` are allowed and therefore end with a trailing dot.
 
 ## Returns
 
