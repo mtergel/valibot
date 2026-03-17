@@ -72,8 +72,9 @@ export type SchemaWithCacheAsync<
  * Caches the output of a schema.
  *
  * Hint: Primitive inputs are cached by value. Object and function inputs are
- * cached by reference identity, so mutating an input object and reusing the
- * same reference can return a stale cached dataset.
+ * cached by reference identity, so mutating input objects and reusing the same
+ * reference can return a stale cached dataset. Returned objects are also
+ * reused by reference, so mutating cached output can affect later cache hits.
  *
  * @param schema The schema to cache.
  *
@@ -92,8 +93,9 @@ export function cacheAsync<
  * Caches the output of a schema.
  *
  * Hint: Primitive inputs are cached by value. Object and function inputs are
- * cached by reference identity, so mutating an input object and reusing the
- * same reference can return a stale cached dataset.
+ * cached by reference identity, so mutating input objects and reusing the same
+ * reference can return a stale cached dataset. Returned objects are also
+ * reused by reference, so mutating cached output can affect later cache hits.
  *
  * @param schema The schema to cache.
  * @param config The cache config.
@@ -142,7 +144,7 @@ export function cacheAsync(
       const cached = this.cache.get(key);
       if (cached) {
         // Hint: We clone the dataset before returning it so downstream pipe
-        // items do not mutate the cached dataset.
+        // items do not mutate the cached dataset wrapper or issues array.
         return _cloneDataset(cached);
       }
 
@@ -159,7 +161,7 @@ export function cacheAsync(
         const outputDataset = await promise;
         this.cache.set(key, outputDataset);
         // Hint: We clone the dataset before returning it so downstream pipe
-        // items do not mutate the cached dataset.
+        // items do not mutate the cached dataset wrapper or issues array.
         return _cloneDataset(outputDataset);
 
         // Cleanup active runs map
