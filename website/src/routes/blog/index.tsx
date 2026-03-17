@@ -83,7 +83,7 @@ export const usePosts = routeLoader$(async () => {
     }));
 
   // Add latest posts section to beginning if there are any
-  if (latestPosts) {
+  if (latestPosts.length > 0) {
     postSections.unshift({ heading: 'Latest posts', posts: latestPosts });
   }
 
