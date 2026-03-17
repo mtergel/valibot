@@ -1,4 +1,4 @@
-import type { BaseIssue, Config } from '../../index.ts';
+import type { BaseIssue, Config } from '../../types/index.ts';
 import type { Cache, CacheConfig } from './types.ts';
 
 /**
